@@ -26,7 +26,7 @@ public class RandomColourAssignment : MonoBehaviour {
 		for (int i = 0; i < colourArray.Length; i++) {
 			colourArray[i] = 0;
 		}
-		
+
 		// Set the current number of colour options
 		if (PlayerPrefs.GetInt("numColours") == 0) {
 			PlayerPrefs.SetInt("numColours", numColours);
@@ -39,6 +39,8 @@ public class RandomColourAssignment : MonoBehaviour {
 			colourArray[Random.Range(0,3)]++;
 		}
 
+		//colourArray[0]=3;colourArray[1]=3;colourArray[2]=3;
+
 		// Determine the greates value in the colour list
 		int maxColour = colourArray[0];
 		
@@ -47,7 +49,7 @@ public class RandomColourAssignment : MonoBehaviour {
 				maxColour = colourArray[i];
 			}
 		}
-
+	
 		// Calculate each colour as a percentage of white
 		float r = (255.0f / maxColour) * colourArray[0];
 		float g = (255.0f / maxColour) * colourArray[1];
@@ -59,5 +61,9 @@ public class RandomColourAssignment : MonoBehaviour {
 
 	public int[] GetColourArray() {
 		return colourArray;
+	}
+
+	public int GetNumColours() {
+		return numColours;
 	}
 }

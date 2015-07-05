@@ -1,0 +1,32 @@
+BUGS
+Animation doubling speed on each subsequent play
+
+DEBUG CONTROLS
+Difficulty ***DONE***
+Success Animation Params
+
+Game Modes
+Endless mode - Set a range of difficulties and randomly select from them with each new puzzle
+Time trials - One minute to complete as many puzzles of a set difficulty as possible
+
+Audio
+Sound effects
+Light background track
+Settings to enable/disable audio w/credits
+
+Effects
+Lerping to the new colour ***DONE***
+Animation upon success ***DONE***
+Particle effects upon success IN PROGRESS
+Celebration toast for high score
+
+Advertising
+Banner ads during endless mode
+Full screen and every X time trials
+
+Social Integration
+Leaderboard for each time trial
+Ability to share scores via social media
+
+Push Notifications (If Possible)
+CTA one, three and five days after last launch
