@@ -51,7 +51,10 @@ public class SuccessAnimation : MonoBehaviour {
 
 	private void SpawnParticles() {
 		for (int i = 0; i < numParticles; i++) {
-			GameObject spawnedObject = (GameObject)GameObject.Instantiate(particleEffect, this.transform.position, this.transform.rotation);
+			// Spawn particle effect
+			GameObject spawnedObject;
+			spawnedObject = (GameObject)GameObject.Instantiate(particleEffect, this.transform.position, this.transform.rotation);
+			spawnedObject.GetComponent<Renderer>().material.color = playerColour.GetTargetColour();
 			particles.Add(spawnedObject);
 		}
 
@@ -60,18 +63,21 @@ public class SuccessAnimation : MonoBehaviour {
 
 	IEnumerator ParticleMovement() {
 		while (Vector3.Distance(particles[0].transform.position, this.transform.position) < particleMaxDist) {
+			// Move each particle in the list
 			foreach (GameObject particle in particles) {
-				print(particle.transform.position);
-				particle.transform.Translate(Vector3.forward * Time.deltaTime * particleSpeed);
+				particle.transform.position += particle.transform.up * Time.deltaTime * particleSpeed;
 			}
 
 			yield return null;
 		}
 
+		// When all particles have been moved, destroy each of them
 		foreach (GameObject particle in particles) {
-			//particles.Remove(particle);
 			Destroy(particle.gameObject);
 		}
+
+		// Clear the list of particles, so that it is ready for the next effect
+		particles = new List<GameObject>();
 	}
 
 	IEnumerator StretchAnimation() {
@@ -90,7 +96,7 @@ public class SuccessAnimation : MonoBehaviour {
 		}
 
 		StartCoroutine("SnapAnimation");
-		//SpawnParticles();
+		SpawnParticles();
 	}
 
 	IEnumerator SnapAnimation() {

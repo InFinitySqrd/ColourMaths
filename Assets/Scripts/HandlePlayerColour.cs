@@ -156,4 +156,8 @@ public class HandlePlayerColour : MonoBehaviour {
 	public void IncrementCurrentColour(int index) {
 		currentColour[index]++;
 	}
+
+	public Color GetTargetColour() {
+		return targetColour;
+	}
 }
