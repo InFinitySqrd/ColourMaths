@@ -12,6 +12,7 @@ public class SuccessAnimation : MonoBehaviour {
 	
 	// Reference to an object that can be spawned as part of the animation
 	[SerializeField] GameObject particleEffect;
+	[SerializeField] GameObject particleEffect2;
 
 	// Variable to control how quickly the particles move
 	[SerializeField] float particleSpeed = 1.0f;
@@ -51,9 +52,21 @@ public class SuccessAnimation : MonoBehaviour {
 
 	private void SpawnParticles() {
 		for (int i = 0; i < numParticles; i++) {
+			// Determine the spawn rotation and position that the particle should be created at
+			Transform spawnTarget;
+			spawnTarget = this.transform;
+
+			spawnTarget.Rotate(Vector3.forward, 360.0f / numParticles);
+
 			// Spawn particle effect
 			GameObject spawnedObject;
-			spawnedObject = (GameObject)GameObject.Instantiate(particleEffect, this.transform.position, this.transform.rotation);
+
+			if (i % 2 == 0) {
+				spawnedObject = (GameObject)GameObject.Instantiate(particleEffect, this.transform.position, spawnTarget.rotation);
+			} else {
+				spawnedObject = (GameObject)GameObject.Instantiate(particleEffect2, this.transform.position, spawnTarget.rotation);
+			}
+
 			spawnedObject.GetComponent<Renderer>().material.color = playerColour.GetTargetColour();
 			particles.Add(spawnedObject);
 		}
@@ -89,7 +102,7 @@ public class SuccessAnimation : MonoBehaviour {
 			// Decriment the rate at which the object will scale
 			scaleRate -= scaleRate * stretchDecay;
 			newScale = Vector3.MoveTowards(animateObject.localScale, targetStretchScale, scaleRate * Time.deltaTime);
-			
+
 			animateObject.localScale = newScale;
 
 			yield return null;
@@ -104,7 +117,7 @@ public class SuccessAnimation : MonoBehaviour {
 			// Scale up the object at a slowly decreasing rate
 			Vector3 newScale;
 			newScale = animateObject.localScale;
-			
+
 			// Decriment the rate at which the object will scale
 			newScale = Vector3.MoveTowards(animateObject.localScale, targetSnapScale, snapSpeed * Time.deltaTime);
 			
