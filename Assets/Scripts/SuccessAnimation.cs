@@ -46,7 +46,8 @@ public class SuccessAnimation : MonoBehaviour {
 
 	public void SetUpAnimation() {
 		scaleRate = stretchSpeed;
-
+		
+		animateObject.transform.localScale = targetSnapScale;
 		StartCoroutine("StretchAnimation");
 	}
 
@@ -98,18 +99,17 @@ public class SuccessAnimation : MonoBehaviour {
 			// Scale up the object at a slowly decreasing rate
 			Vector3 newScale;
 			newScale = animateObject.localScale;
-
+			print("A");
 			// Decriment the rate at which the object will scale
 			scaleRate -= scaleRate * stretchDecay;
 			newScale = Vector3.MoveTowards(animateObject.localScale, targetStretchScale, scaleRate * Time.deltaTime);
-
+			
 			animateObject.localScale = newScale;
-
+			
 			yield return null;
 		}
-
-		StartCoroutine("SnapAnimation");
-		SpawnParticles();
+		
+		SwitchAnimatingStates();
 	}
 
 	IEnumerator SnapAnimation() {
@@ -127,5 +127,10 @@ public class SuccessAnimation : MonoBehaviour {
 		}
 
 		playerColour.ClearPlayerColour();
+	}
+
+	void SwitchAnimatingStates() {
+		StartCoroutine("SnapAnimation");
+		SpawnParticles();
 	}
 }
