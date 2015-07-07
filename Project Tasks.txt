@@ -1,8 +1,9 @@
-BUGS
-Animation doubling speed on each subsequent play
+CURRENT TASKS
+Implement Updated Debug Controls
+Switch all existing UI to Unity 5.0 UI
 
-DEBUG CONTROLS
-Difficulty ***DONE***
+Debug Controls
+Difficulty
 Success Animation Params
 
 Game Modes
@@ -17,7 +18,7 @@ Settings to enable/disable audio w/credits
 Effects
 Lerping to the new colour ***DONE***
 Animation upon success ***DONE***
-Particle effects upon success IN PROGRESS
+Particle effects upon success ***DONE***
 Celebration toast for high score
 
 Advertising
