@@ -9,13 +9,13 @@ public class UIController : MonoBehaviour {
 	// Get a refernece to the player colour
 	[SerializeField] HandlePlayerColour playerColour;
 
-	// Variable to track whether the user has debug controls enabled or not
-	private bool debugEnabled = false;
+	// Get a reference to the debug menu, so that it can be enabled
+	[SerializeField] DebugMenu debugControls;
 
 	// Function called every frame
 	void Update() {
 		if ((Input.touches.Length > 2 && Input.touches[2].phase == TouchPhase.Began) || Input.GetKeyDown(KeyCode.Space)) {
-			debugEnabled = !debugEnabled;
+			debugControls.SwitchDebugState();
 		}
 	}
 
@@ -40,7 +40,6 @@ public class UIController : MonoBehaviour {
 		GUI.Box(new Rect(Screen.width / 2.0f - Screen.height / 10.0f, 0.0f, Screen.height / 5.0f, Screen.height / 5.0f), PlayerPrefs.GetInt("score").ToString(), style);
 
 		DrawColourButtons();
-		CreateDebugMenu();
 	}
 
 	private void DrawColourButtons() {
@@ -73,47 +72,6 @@ public class UIController : MonoBehaviour {
 			
 			// Assign the new colour to the player
 			playerColour.UpdatePlayerColour();
-		}
-	}
-
-	private void CreateDebugMenu() {
-		if (debugEnabled) {
-			// Reduce the current number of colours
-			if (GUI.Button(new Rect(0.0f, Screen.height / 2.0f - Screen.height / 10.0f, Screen.height / 5.0f, Screen.height / 5.0f), "<")) {
-				int colours = PlayerPrefs.GetInt("numColours");
-
-				if (colours > 1) {
-					PlayerPrefs.SetInt("numColours", colours - 1);
-
-					// Reset the score upon changing the difficulty
-					PlayerPrefs.SetInt("score", 0);
-
-					// Create a new colour puzzle
-					goalColour.CreateColour();
-				}
-			}
-
-			// Increase the current number of colours
-			if (GUI.Button(new Rect(Screen.width - Screen.height / 5.0f, Screen.height / 2.0f - Screen.height / 10.0f, Screen.height / 5.0f, Screen.height / 5.0f), ">")) {
-				int colours = PlayerPrefs.GetInt("numColours");
-				
-				if (colours < 20) {
-					PlayerPrefs.SetInt("numColours", colours + 1);
-
-					// Reset the score upon changing the difficulty
-					PlayerPrefs.SetInt("score", 0);
-
-					// Create a new colour puzzle
-					goalColour.CreateColour();
-				}
-			}
-
-			GUIStyle style = new GUIStyle();
-			style.normal.textColor = Color.white;
-			style.fontSize = 16;
-			style.alignment = TextAnchor.MiddleCenter;
-
-			GUI.Box(new Rect(Screen.width / 2.0f - Screen.height / 10.0f, Screen.height / 2.0f - Screen.height / 10.0f, Screen.height / 5.0f, Screen.height / 5.0f), PlayerPrefs.GetInt("numColours").ToString(), style);
 		}
 	}
 }

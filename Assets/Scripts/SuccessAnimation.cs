@@ -15,24 +15,24 @@ public class SuccessAnimation : MonoBehaviour {
 	[SerializeField] GameObject particleEffect2;
 
 	// Variable to control how quickly the particles move
-	[SerializeField] float particleSpeed = 1.0f;
+	public float particleSpeed = 1.0f;
 
 	// Variable to control how far particles will move from the centre before being destroyed
-	[SerializeField] float particleMaxDist = 5.0f;
+	public float particleMaxDist = 5.0f;
 
 	// Variables to control the number of particles that are spawned
-	[SerializeField] int numParticles = 12;
+	public int numParticles = 12;
 
 	// Target size for the scale function
 	[SerializeField] Vector3 targetStretchScale = new Vector3(1,1,1);
 	[SerializeField] Vector3 targetSnapScale = new Vector3(1,1,1);
 
 	// Speed variables to control the duration of the scale
-	[SerializeField] float stretchSpeed = 1.0f;
-	[SerializeField] float snapSpeed = 1.0f;
+	public float stretchSpeed = 1.0f;
+	public float snapSpeed = 1.0f;
 
 	// Decay variable to slow the speed of the stretch over time
-	[SerializeField] float stretchDecay = 0.1f;
+	public float stretchDecay = 0.1f;
 
 	// A variable to track the current scale rate
 	private float scaleRate;
