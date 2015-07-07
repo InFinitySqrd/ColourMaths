@@ -52,25 +52,32 @@ public class SuccessAnimation : MonoBehaviour {
 	}
 
 	private void SpawnParticles() {
-		for (int i = 0; i < numParticles; i++) {
-			// Determine the spawn rotation and position that the particle should be created at
-			Transform spawnTarget;
-			spawnTarget = this.transform;
+		// Create variables to track the spawn point
+		GameObject targetObject = new GameObject();
+		Transform spawnTarget = targetObject.transform;
+		spawnTarget.position = this.transform.position;
+		spawnTarget.rotation = this.transform.rotation;
 
+		// Determine the spawn rotation and position that the particle should be created at
+		for (int i = 0; i < numParticles; i++) {
 			spawnTarget.Rotate(Vector3.forward, 360.0f / numParticles);
+			spawnTarget.position = new Vector3 (spawnTarget.position.x, spawnTarget.position.y, this.transform.position.z - 1.0f);
 
 			// Spawn particle effect
 			GameObject spawnedObject;
 
 			if (i % 2 == 0) {
-				spawnedObject = (GameObject)GameObject.Instantiate(particleEffect, this.transform.position, spawnTarget.rotation);
+				spawnedObject = (GameObject)GameObject.Instantiate(particleEffect, spawnTarget.position, spawnTarget.rotation);
 			} else {
-				spawnedObject = (GameObject)GameObject.Instantiate(particleEffect2, this.transform.position, spawnTarget.rotation);
+				spawnedObject = (GameObject)GameObject.Instantiate(particleEffect2, spawnTarget.position, spawnTarget.rotation);
 			}
 
 			spawnedObject.GetComponent<Renderer>().material.color = playerColour.GetTargetColour();
 			particles.Add(spawnedObject);
 		}
+
+		// Destroy the temporary game object
+		Destroy (targetObject);
 
 		StartCoroutine("ParticleMovement");
 	}
@@ -98,8 +105,8 @@ public class SuccessAnimation : MonoBehaviour {
 		while (animateObject.localScale.x < targetStretchScale.x) {
 			// Scale up the object at a slowly decreasing rate
 			Vector3 newScale;
-			newScale = animateObject.localScale;
-			print("A");
+			newScale = animateObject.localScale;			
+
 			// Decriment the rate at which the object will scale
 			scaleRate -= scaleRate * stretchDecay;
 			newScale = Vector3.MoveTowards(animateObject.localScale, targetStretchScale, scaleRate * Time.deltaTime);
