@@ -136,8 +136,16 @@ public class SuccessAnimation : MonoBehaviour {
 		playerColour.ClearPlayerColour();
 	}
 
-	void SwitchAnimatingStates() {
+	private void SwitchAnimatingStates() {
 		StartCoroutine("SnapAnimation");
 		SpawnParticles();
+	}
+
+	public float DebugGetStretchTarget() {
+		return targetStretchScale.x;
+	}
+
+	public void DebugSetStretchTarget(float targetSize) {
+		targetStretchScale = new Vector3(targetSize, targetSize, targetSize);
 	}
 }

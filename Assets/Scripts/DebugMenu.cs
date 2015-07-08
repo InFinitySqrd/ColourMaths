@@ -16,6 +16,9 @@ public class DebugMenu : MonoBehaviour {
 	// Variable to hold the current difficulty temporarily
 	private int currentDifficulty = 0;
 
+	// Variable to hold the current target stretch size
+	private float targetStretchSize = 0.0f;
+
 	// Use this for initialization
 	void Awake () {
 
@@ -36,9 +39,10 @@ public class DebugMenu : MonoBehaviour {
 			DrawSliders(3, "Particle Dist", ref animationVars.particleMaxDist, 0.0f, 10.0f);
 
 			// Sliders to control the animation
-			DrawSliders(4, "Stretch Speed", ref animationVars.stretchSpeed, 0.0f, 20.0f);
-			DrawSliders(5, "Snap Speed", ref animationVars.snapSpeed, 0.0f, 20.0f);
-			DrawSliders(6, "Stretch Decay", ref animationVars.stretchDecay, 0.0f, 0.085f);
+			DrawSliders(4, "Stretch Target", ref targetStretchSize, 3.5f, 6.0f);
+			DrawSliders(5, "Stretch Speed", ref animationVars.stretchSpeed, 0.0f, 20.0f);
+			DrawSliders(6, "Snap Speed", ref animationVars.snapSpeed, 0.0f, 20.0f);
+			DrawSliders(7, "Stretch Decay", ref animationVars.stretchDecay, 0.0f, 0.1f);
 
 			// Draw a button to output all variables to a txt file
 			SaveVariables();
@@ -88,8 +92,10 @@ public class DebugMenu : MonoBehaviour {
 		debug = !debug;
 
 		// Get the current difficulty level
+		// Get the current stretch target
 		if (debug) {
 			currentDifficulty = PlayerPrefs.GetInt("numColours");
+			targetStretchSize = animationVars.DebugGetStretchTarget();
 		}
 
 		// Set the game's difficulty to the new value
@@ -99,6 +105,9 @@ public class DebugMenu : MonoBehaviour {
 			
 			// Reset the score upon changing the difficulty
 			PlayerPrefs.SetInt("score", 0);
+
+			// Set the new stretch target
+			animationVars.DebugSetStretchTarget(targetStretchSize);
 			
 			// Create a new colour puzzle
 			goalColour.CreateColour();
