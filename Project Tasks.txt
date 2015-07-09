@@ -2,12 +2,9 @@ Testable Version Requirements
 Basic Game Mechanic ***DONE***
 Full Suite of Debug Controls ***DONE***
 Update Game UI
-Implement Basic Analytics
+Implement Basic Analytics ***DONE***
 
-Debug Controls
-Difficulty ***DONE***
-Success Animation Params ***DONE***
-Record button to save changes to a file ***DONE***
+Debug Controls ***DONE***
 
 Game Modes
 Endless mode - Set a range of difficulties and randomly select from them with each new puzzle
@@ -19,13 +16,9 @@ Light background track
 Settings to enable/disable audio w/credits
 
 Effects
-Lerping to the new colour ***DONE***
-Animation upon success ***DONE***
-Particle effects upon success ***DONE***
 Celebration toast for high score
 
 Analytics
-Record Player Colour & Target Colour if New Game is pressed
 Score reached before finishing endless mode
 Difficulty of endless mode
 Scores achieved in Time Trial
@@ -40,3 +33,18 @@ Ability to share scores via social media
 
 Push Notifications (If Possible)
 CTA one, three and five days after last launch
+
+COMPLETED TASKS
+Debug Controls
+Difficulty ***DONE***
+Success Animation Params ***DONE***
+Record button to save changes to a file ***DONE***
+
+Effects
+Lerping to the new colour ***DONE***
+Animation upon success ***DONE***
+Particle effects upon success ***DONE***
+
+Analytics
+Default analytics recording ***DONE***
+Record Player Colour & Target Colour if New Game is pressed ***DONE***

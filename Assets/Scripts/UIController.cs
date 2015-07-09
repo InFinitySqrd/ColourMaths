@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using GameAnalyticsSDK;
 
 public class UIController : MonoBehaviour {
 	// Declare variables
@@ -14,14 +15,24 @@ public class UIController : MonoBehaviour {
 
 	// Function called every frame
 	void Update() {
+		// Handle enabling/disabling the debug menu
 		if ((Input.touches.Length > 2 && Input.touches[2].phase == TouchPhase.Began) || Input.GetKeyDown(KeyCode.Space)) {
 			debugControls.SwitchDebugState();
+		}
+
+		if (Input.GetMouseButtonDown(0)) {
+			HandleColourInput();
 		}
 	}
 
 	void OnGUI() {
 		// Button to reset the game and get a new colour
 		if (GUI.Button(new Rect(0.0f, 0.0f, Screen.width / 5.0f, Screen.width / 5.0f), "New Game")) {
+			// Send analyitics event recording the colour the player gave up on
+			string analyticsData = "TargetColour: " + goalColour.GetTargetColour().ToString() + "PlayerColour: " + playerColour.GetPlayerColour().ToString();
+			StartCoroutine(SendAnalyticsEvent(analyticsData));
+
+			// Restart the game 
 			goalColour.CreateColour();
 			playerColour.ClearPlayerColour();
 		}
@@ -38,10 +49,11 @@ public class UIController : MonoBehaviour {
 
 		// Label to display the player's current score
 		GUI.Box(new Rect(Screen.width / 2.0f - Screen.height / 10.0f, 0.0f, Screen.height / 5.0f, Screen.height / 5.0f), PlayerPrefs.GetInt("score").ToString(), style);
-
-		DrawColourButtons();
 	}
 
+	/// <summary>
+	/// Depricated method
+	/// </summary>
 	private void DrawColourButtons() {
 		// Button to add red to the colour
 		if (GUI.Button(new Rect(0.0f, 4.0f * Screen.height / 5.0f, Screen.width / 3.0f, Screen.width / 3.0f), "Red")) {
@@ -62,6 +74,25 @@ public class UIController : MonoBehaviour {
 		}
 	}
 
+	private void HandleColourInput() {
+		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+		RaycastHit hit;
+
+		if (Physics.Raycast(ray, out hit)) {
+			switch (hit.collider.name) {
+			case "Red":
+				IncrementPlayerColour(0);
+				break;
+			case "Green":
+				IncrementPlayerColour(1);
+				break;
+			case "Blue":
+				IncrementPlayerColour(2);
+				break;
+			}
+		}
+	}
+
 	private void IncrementPlayerColour(int index) {
 		if (playerColour.GetNumColours() < goalColour.GetNumColours()) {
 			// Increment the current colour
@@ -73,5 +104,10 @@ public class UIController : MonoBehaviour {
 			// Assign the new colour to the player
 			playerColour.UpdatePlayerColour();
 		}
+	}
+
+	IEnumerator SendAnalyticsEvent(string eventString) {
+		GameAnalytics.NewDesignEvent(eventString);
+		yield return null;
 	}
 }

@@ -92,7 +92,7 @@ public class HandlePlayerColour : MonoBehaviour {
 	// Check to see if the player has created the correct colour
 	private void CheckWinCondition() {
 		// Get the goal colour array
-		int[] goal = goalColour.GetColourArray();
+		int[] goal = goalColour.GetTargetColour();
 		
 		// Create a boolean to see if the player has won
 		bool winner = true;
@@ -155,6 +155,10 @@ public class HandlePlayerColour : MonoBehaviour {
 
 	public void IncrementCurrentColour(int index) {
 		currentColour[index]++;
+	}
+
+	public int[] GetPlayerColour() {
+		return currentColour;
 	}
 
 	public Color GetTargetColour() {

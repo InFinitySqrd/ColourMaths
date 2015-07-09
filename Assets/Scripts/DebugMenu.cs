@@ -46,6 +46,9 @@ public class DebugMenu : MonoBehaviour {
 
 			// Draw a button to output all variables to a txt file
 			SaveVariables();
+
+			// Draw a button to allow the user to reset the app
+			ResetGame();
 		}
 	}
 
@@ -73,17 +76,24 @@ public class DebugMenu : MonoBehaviour {
 
 	private void SaveVariables() {
 		// Button that creates a text file and saves all current variables to it
-		if (GUI.Button(new Rect(Screen.width / 2.0f - Screen.width / 10.0f, 0.0f, Screen.width / 5.0f, Screen.width / 5.0f), "Save Vars")) {
+		if (GUI.Button(new Rect(Screen.width / 2.0f - Screen.width / 5.0f, 0.0f, Screen.width / 5.0f, Screen.width / 5.0f), "Save Vars")) {
 			if (!Directory.Exists(Application.persistentDataPath)) {
 				Directory.CreateDirectory(Application.persistentDataPath);
 			}
 
 			string outputText = animationVars.numParticles + "," + animationVars.particleSpeed + "," + animationVars.particleMaxDist + "," +
-								animationVars.stretchSpeed + "," + animationVars.snapSpeed + "," + animationVars.stretchDecay;
+								targetStretchSize + "," + animationVars.stretchSpeed + "," + animationVars.snapSpeed + "," + animationVars.stretchDecay;
 			string uniqueName = System.DateTime.Now.TimeOfDay.ToString();
 			uniqueName = uniqueName.Replace(':', '-');
 
 			File.WriteAllText(Application.persistentDataPath + "/" + uniqueName + "VARS.txt", outputText);
+		}
+	}
+
+	private void ResetGame() {
+		// Button that resets the game, if the debug user has gotten it into an unhandled state
+		if (GUI.Button(new Rect(Screen.width / 2.0f, 0.0f, Screen.width / 5.0f, Screen.width / 5.0f), "Reset")) {
+			Application.LoadLevel(Application.loadedLevel);
 		}
 	}
 

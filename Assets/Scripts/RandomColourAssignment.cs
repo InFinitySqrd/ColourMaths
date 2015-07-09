@@ -59,7 +59,7 @@ public class RandomColourAssignment : MonoBehaviour {
 		colourCube.SetColor("_Color", new Color(r / 255.0f, g / 255.0f, b / 255.0f));
 	}
 
-	public int[] GetColourArray() {
+	public int[] GetTargetColour() {
 		return colourArray;
 	}
 
