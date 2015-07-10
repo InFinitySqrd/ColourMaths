@@ -54,12 +54,15 @@ public class UIController : MonoBehaviour {
 			switch (hit.collider.name) {
 			case "Red":
 				IncrementPlayerColour(0);
+				hit.collider.GetComponent<ButtonClickedAnimation>().StartClickedAnimation();
 				break;
 			case "Green":
 				IncrementPlayerColour(1);
+				hit.collider.GetComponent<ButtonClickedAnimation>().StartClickedAnimation();
 				break;
 			case "Blue":
 				IncrementPlayerColour(2);
+				hit.collider.GetComponent<ButtonClickedAnimation>().StartClickedAnimation();
 				break;
 			}
 		}

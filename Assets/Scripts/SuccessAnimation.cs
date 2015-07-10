@@ -121,7 +121,7 @@ public class SuccessAnimation : MonoBehaviour {
 
 	IEnumerator SnapAnimation() {
 		while (animateObject.localScale.x > targetSnapScale.x) {
-			// Scale up the object at a slowly decreasing rate
+			// Scale down the object
 			Vector3 newScale;
 			newScale = animateObject.localScale;
 
