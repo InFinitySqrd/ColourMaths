@@ -1,7 +1,7 @@
 Testable Version Requirements
 Basic Game Mechanic ***DONE***
 Full Suite of Debug Controls ***DONE***
-Update Game UI
+Update Game UI ***DONE***
 Implement Basic Analytics ***DONE***
 
 Debug Controls ***DONE***
@@ -25,7 +25,7 @@ Scores achieved in Time Trial
 
 Advertising
 Banner ads during endless mode
-Full screen and every X time trials
+Full screen ad every X time trials
 
 Social Integration
 Leaderboard for each time trial

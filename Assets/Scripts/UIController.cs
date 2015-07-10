@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 using GameAnalyticsSDK;
 
 public class UIController : MonoBehaviour {
@@ -13,6 +14,9 @@ public class UIController : MonoBehaviour {
 	// Get a reference to the debug menu, so that it can be enabled
 	[SerializeField] DebugMenu debugControls;
 
+	// Get a reference to the score label
+	[SerializeField] Text scoreLabel;
+
 	// Function called every frame
 	void Update() {
 		// Handle enabling/disabling the debug menu
@@ -23,55 +27,23 @@ public class UIController : MonoBehaviour {
 		if (Input.GetMouseButtonDown(0)) {
 			HandleColourInput();
 		}
+
+		// Update the player's score value
+		scoreLabel.text = PlayerPrefs.GetInt("score").ToString();
 	}
 
-	void OnGUI() {
-		// Button to reset the game and get a new colour
-		if (GUI.Button(new Rect(0.0f, 0.0f, Screen.width / 5.0f, Screen.width / 5.0f), "New Game")) {
-			// Send analyitics event recording the colour the player gave up on
-			string analyticsData = "TargetColour: " + goalColour.GetTargetColour().ToString() + "PlayerColour: " + playerColour.GetPlayerColour().ToString();
-			StartCoroutine(SendAnalyticsEvent(analyticsData));
+	public void NewGame() {
+		// Send analyitics event recording the colour the player gave up on
+		string analyticsData = "TargetColour: " + goalColour.GetTargetColour().ToString() + "PlayerColour: " + playerColour.GetPlayerColour().ToString();
+		StartCoroutine(SendAnalyticsEvent(analyticsData));
 
-			// Restart the game 
-			goalColour.CreateColour();
-			playerColour.ClearPlayerColour();
-		}
-
-		// Button to clear previously entered colours
-		if (GUI.Button(new Rect(Screen.width - Screen.width / 5.0f, 0.0f, Screen.width / 5.0f, Screen.width / 5.0f), "Clear")) {
-			playerColour.ClearPlayerColour();
-		}
-
-		GUIStyle style = new GUIStyle();
-		style.normal.textColor = Color.white;
-		style.fontSize = 32;
-		style.alignment = TextAnchor.MiddleCenter;
-
-		// Label to display the player's current score
-		GUI.Box(new Rect(Screen.width / 2.0f - Screen.height / 10.0f, 0.0f, Screen.height / 5.0f, Screen.height / 5.0f), PlayerPrefs.GetInt("score").ToString(), style);
+		// Restart the game 
+		goalColour.CreateColour();
+		playerColour.ClearPlayerColour();
 	}
 
-	/// <summary>
-	/// Depricated method
-	/// </summary>
-	private void DrawColourButtons() {
-		// Button to add red to the colour
-		if (GUI.Button(new Rect(0.0f, 4.0f * Screen.height / 5.0f, Screen.width / 3.0f, Screen.width / 3.0f), "Red")) {
-			// Increment the value for the red colour component
-			IncrementPlayerColour(0);
-		}
-		
-		// Button to add green to the colour
-		if (GUI.Button(new Rect(Screen.width / 3.0f, 4.0f * Screen.height / 5.0f, Screen.width / 3.0f, Screen.width / 3.0f), "Green")) {
-			// Increment the value for the green colour component
-			IncrementPlayerColour(1);
-		}
-		
-		// Button to add blue to the colour
-		if (GUI.Button(new Rect(2.0f * Screen.width / 3.0f, 4.0f * Screen.height / 5.0f, Screen.width / 3.0f, Screen.width / 3.0f), "Blue")) {
-			// Increment the value for the blue colour component
-			IncrementPlayerColour(2);
-		}
+	public void ClearColour() {
+		playerColour.ClearPlayerColour();
 	}
 
 	private void HandleColourInput() {
