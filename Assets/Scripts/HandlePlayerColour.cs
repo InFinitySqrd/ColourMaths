@@ -22,7 +22,7 @@ public class HandlePlayerColour : MonoBehaviour {
 	private Color targetColour, presentColour;
 	
 	// Keep a tally of the number of colours entered by the player
-	private int numColours = 0;
+	private int numColoursEntered = 0;
 
 	// Declare a variable to track the progress of a colour lerp
 	private float lerpTimer = 0.0f;
@@ -139,18 +139,18 @@ public class HandlePlayerColour : MonoBehaviour {
 		}
 		
 		// Set the number of colours entered by the player to 0
-		numColours = 0;
+		numColoursEntered = 0;
 		
 		// Assign the new colour to the player
 		targetColour = new Color(0,0,0);
 	}
 
-	public int GetNumColours() {
-		return numColours;
+	public int GetNumColoursEntered() {
+		return numColoursEntered;
 	}
 
 	public void SetNumColours(int value) {
-		numColours = value;
+		numColoursEntered = value;
 	}
 
 	public void IncrementCurrentColour(int index) {
